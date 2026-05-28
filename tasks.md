@@ -32,13 +32,13 @@ Execute **one task at a time**. Check the box only after **Verify** passes and a
 
 ## Phase 2 — Backend (~35 min)
 
-- [ ] **T6** — Create `app.py` with Flask app factory or single `app`, `run_script()` helper (`subprocess.run`, timeout from config, no `shell=True`)  
+- [x] **T6** — Create `app.py` with Flask app factory or single `app`, `run_script()` helper (`subprocess.run`, timeout from config, no `shell=True`)  
   **Verify:** `python3 -m py_compile app.py`
 
-- [ ] **T7** — Implement `GET /api/status` (map exit 0→awake, 1→asleep, else→unknown; ISO `checked_at`)  
+- [X] **T7** — Implement `GET /api/status` (map exit 0→awake, 1→asleep, else→unknown; ISO `checked_at`)  
   **Verify:** `curl -s http://127.0.0.1:8080/api/status | python3 -m json.tool`
 
-- [ ] **T8** — Implement `POST /api/wake` and `POST /api/suspend` (200 on exit 0, 502 on non-zero, 500 on timeout)  
+- [X] **T8** — Implement `POST /api/wake` and `POST /api/suspend` (200 on exit 0, 502 on non-zero, 500 on timeout)  
   **Verify:** `curl -s -X POST http://127.0.0.1:8080/api/wake` and suspend return expected JSON.
 
 - [ ] **T9** — Add `if __name__ == '__main__'` entry using `config.HOST`/`config.PORT`  
