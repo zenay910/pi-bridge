@@ -85,7 +85,101 @@
   </footer>
 
   <script>
-    // JS wiring added in T11
+    const pill       = document.getElementById('state-pill');
+    const lastChecked = document.getElementById('last-checked');
+    const btnRefresh = document.getElementById('btn-refresh');
+    const btnWake    = document.getElementById('btn-wake');
+    const btnSuspend = document.getElementById('btn-suspend');
+    const actionMsg  = document.getElementById('action-msg');
+
+    // Tailwind classes for each state value returned by /api/status
+    const STATE_CLASSES = {
+      awake:    'bg-emerald-700 text-emerald-100',
+      asleep:   'bg-slate-600 text-slate-300',
+      unknown:  'bg-amber-700 text-amber-100',
+      checking: 'bg-slate-700 text-slate-300',
+    };
+    const STATE_LABELS = {
+      awake: 'Awake', asleep: 'Asleep', unknown: 'Unknown', checking: 'Checking\u2026',
+    };
+
+    function setStatepill(state) {
+      const base = 'inline-block rounded-full px-4 py-1.5 text-sm font-semibold';
+      pill.className = base + ' ' + (STATE_CLASSES[state] ?? STATE_CLASSES.unknown);
+      pill.textContent = STATE_LABELS[state] ?? state;
+    }
+
+    function setActionMsg(text, isError = false) {
+      actionMsg.textContent = text;
+      actionMsg.className = 'text-xs ' + (isError ? 'text-red-400' : 'text-slate-400');
+      actionMsg.classList.remove('hidden');
+    }
+
+    function clearActionMsg() {
+      actionMsg.textContent = '';
+      actionMsg.classList.add('hidden');
+    }
+
+    function setActionButtons(disabled) {
+      btnWake.disabled    = disabled;
+      btnSuspend.disabled = disabled;
+    }
+
+    async function fetchStatus() {
+      btnRefresh.disabled = true;
+      setStatepill('checking');
+      clearActionMsg();
+      try {
+        const res  = await fetch('/api/status');
+        const data = await res.json();
+        if (!res.ok) {
+          setStatepill('unknown');
+          setActionMsg('Status check failed: ' + (data.detail ?? res.status), true);
+          return;
+        }
+        setStatepill(data.state);
+        lastChecked.textContent = new Date(data.checked_at).toLocaleTimeString();
+      } catch (err) {
+        setStatepill('unknown');
+        setActionMsg('Could not reach pi-bridge: ' + err.message, true);
+      } finally {
+        btnRefresh.disabled = false;
+      }
+    }
+
+    async function runAction(url, label) {
+      setActionButtons(true);
+      btnRefresh.disabled = true;
+      clearActionMsg();
+      setActionMsg('Working\u2026');
+      try {
+        const res  = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: '{}',
+        });
+        const data = await res.json();
+        if (res.ok) {
+          setActionMsg(label + ' command sent. Refreshing status\u2026');
+          setTimeout(fetchStatus, 3000);
+        } else {
+          setActionMsg(label + ' failed: ' + (data.detail ?? res.status), true);
+        }
+      } catch (err) {
+        setActionMsg(label + ' error: ' + err.message, true);
+      } finally {
+        setActionButtons(false);
+        btnRefresh.disabled = false;
+      }
+    }
+
+    btnRefresh.addEventListener('click', fetchStatus);
+    btnWake.addEventListener('click',    () => runAction('/api/wake',    'Wake'));
+    btnSuspend.addEventListener('click', () => runAction('/api/suspend', 'Suspend'));
+
+    // Fetch status on load, then every 60 seconds
+    fetchStatus();
+    setInterval(fetchStatus, 60_000);
   </script>
 
 </body>

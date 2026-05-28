@@ -48,10 +48,10 @@ Execute **one task at a time**. Check the box only after **Verify** passes and a
 
 ## Phase 3 — UI (~30 min)
 
-- [ ] **T10** — Create `templates/index.html`: semantic layout, Tailwind CDN, status card + action buttons per `project.md`  
+- [x] **T10** — Create `templates/index.html`: semantic layout, Tailwind CDN, status card + action buttons per `project.md`  
   **Verify:** Open `/` in browser; page renders without console errors.
 
-- [ ] **T11** — Wire `fetch` for status, refresh, wake, suspend (loading/disabled states, 60s auto-refresh, 3s post-action refresh)  
+- [x] **T11** — Wire `fetch` for status, refresh, wake, suspend (loading/disabled states, 60s auto-refresh, 3s post-action refresh)  
   **Verify:** Buttons call API; status pill updates; errors show a simple message.
 
 - [ ] **T12** — Implement `GET /` route rendering `index.html`  
