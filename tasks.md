@@ -41,7 +41,7 @@ Execute **one task at a time**. Check the box only after **Verify** passes and a
 - [X] **T8** — Implement `POST /api/wake` and `POST /api/suspend` (200 on exit 0, 502 on non-zero, 500 on timeout)  
   **Verify:** `curl -s -X POST http://127.0.0.1:8080/api/wake` and suspend return expected JSON.
 
-- [ ] **T9** — Add `if __name__ == '__main__'` entry using `config.HOST`/`config.PORT`  
+- [x] **T9** — Add `if __name__ == '__main__'` entry using `config.HOST`/`config.PORT`  
   **Verify:** `python3 app.py` starts; endpoints respond locally.
 
 ---

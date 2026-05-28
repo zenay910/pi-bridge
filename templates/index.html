@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" class="bg-slate-900 text-slate-100">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>pi-bridge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <header class="px-4 py-6 border-b border-slate-700">
+    <h1 class="text-2xl font-bold tracking-tight">pi-bridge</h1>
+    <p class="text-slate-400 text-sm mt-0.5">Homelab server control</p>
+  </header>
+
+  <main class="flex-1 px-4 py-6 space-y-4 max-w-md w-full mx-auto">
+
+    <!-- Status card -->
+    <section aria-labelledby="status-heading" class="bg-slate-800 rounded-xl p-5 space-y-3">
+      <h2 id="status-heading" class="text-xs font-semibold uppercase tracking-widest text-slate-400">
+        Server status
+      </h2>
+
+      <!-- State pill — JS swaps id="state-pill" classes and text -->
+      <div class="flex items-center gap-3">
+        <span id="state-pill"
+              class="inline-block rounded-full px-4 py-1.5 text-sm font-semibold
+                     bg-slate-700 text-slate-300">
+          Checking…
+        </span>
+      </div>
+
+      <!-- Last-checked line -->
+      <p class="text-xs text-slate-500">
+        Last checked: <span id="last-checked">—</span>
+      </p>
+
+      <button id="btn-refresh"
+              class="mt-1 rounded-lg px-4 py-2 text-sm font-medium
+                     bg-slate-700 hover:bg-slate-600 focus:outline-none
+                     focus-visible:ring-2 focus-visible:ring-slate-400
+                     disabled:opacity-50 disabled:cursor-not-allowed
+                     transition-colors"
+              aria-label="Refresh server status">
+        Refresh status
+      </button>
+    </section>
+
+    <!-- Actions card -->
+    <section aria-labelledby="actions-heading" class="bg-slate-800 rounded-xl p-5 space-y-3">
+      <h2 id="actions-heading" class="text-xs font-semibold uppercase tracking-widest text-slate-400">
+        Actions
+      </h2>
+
+      <div class="flex flex-col gap-2 sm:flex-row">
+        <button id="btn-wake"
+                class="flex-1 rounded-lg px-4 py-2.5 text-sm font-medium
+                       bg-emerald-700 hover:bg-emerald-600 focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-emerald-400
+                       disabled:opacity-50 disabled:cursor-not-allowed
+                       transition-colors"
+                aria-label="Wake the server via Wake-on-LAN">
+          Wake server
+        </button>
+
+        <button id="btn-suspend"
+                class="flex-1 rounded-lg px-4 py-2.5 text-sm font-medium
+                       bg-amber-700 hover:bg-amber-600 focus:outline-none
+                       focus-visible:ring-2 focus-visible:ring-amber-400
+                       disabled:opacity-50 disabled:cursor-not-allowed
+                       transition-colors"
+                aria-label="Suspend the server">
+          Suspend server
+        </button>
+      </div>
+
+      <!-- Action feedback — hidden until JS shows it -->
+      <p id="action-msg" class="text-xs text-slate-400 hidden" aria-live="polite"></p>
+    </section>
+
+  </main>
+
+  <footer class="px-4 py-4 border-t border-slate-700 text-center text-xs text-slate-600">
+    Tailscale only — not exposed to the public internet.
+  </footer>
+
+  <script>
+    // JS wiring added in T11
+  </script>
+
+</body>
+</html>
