@@ -13,19 +13,19 @@ Execute **one task at a time**. Check the box only after **Verify** passes and a
 
 ## Phase 1 — Project skeleton (~15 min)
 
-- [ ] **T1** — Create `requirements.txt` with pinned `flask` (e.g. `flask>=3.0,<4`)  
+- [x] **T1** — Create `requirements.txt` with pinned `flask` (e.g. `flask>=3.0,<4`)  
   **Verify:** `pip install -r requirements.txt` succeeds in a venv.
 
-- [ ] **T2** — Create `.env.example` with all variables from `project.md`  
+- [x] **T2** — Create `.env.example` with all variables from `project.md`  
   **Verify:** Copy to `.env` locally; values are documented.
 
-- [ ] **T3** — Create `config.py` reading env vars with defaults from `project.md`  
+- [x] **T3** — Create `config.py` reading env vars with defaults from `project.md`  
   **Verify:** `python3 -c "import config; print(config.PORT)"` prints default.
 
-- [ ] **T4** — Add `scripts/status.sh`, `scripts/wake.sh`, `scripts/suspend.sh` **stubs** that echo and exit 0/1 for local dev (or document "skip stubs" if using real scripts on Pi only)  
+- [x] **T4** — Add `scripts/status.sh`, `scripts/wake.sh`, `scripts/suspend.sh` **stubs** that echo and exit 0/1 for local dev (or document "skip stubs" if using real scripts on Pi only)  
   **Verify:** `chmod +x scripts/*.sh` and `./scripts/status.sh; echo $?` works.
 
-- [ ] **T5** — On the Pi: copy or symlink **real** scripts to match `PI_BRIDGE_*_SCRIPT` paths; set `.env`  
+- [x] **T5** — On the Pi: copy or symlink **real** scripts to match `PI_BRIDGE_*_SCRIPT` paths; set `.env`  
   **Verify:** Run each script manually over SSH; exit codes match contract in `project.md`.
 
 ---
