@@ -2,7 +2,7 @@ import logging
 import subprocess
 from datetime import datetime, timezone
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
 import config
 
@@ -33,6 +33,11 @@ def run_script(path: str) -> tuple[int, str, str]:
             result.stderr.strip(),
         )
     return result.returncode, result.stdout, result.stderr
+
+
+@app.get("/")
+def index():
+    return render_template("index.html")
 
 
 @app.get("/api/status")
