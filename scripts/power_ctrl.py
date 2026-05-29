@@ -5,7 +5,7 @@ import time
 
 # --- CONFIGURATION ---
 
-TARGET_MAC = "aa:bb:cc:dd:ee:ff" 
+TARGET_MAC = "aa:bb:cc:dd:ee:ff"
 
 
 TARGET_HOST = "100.64.0.1" 
