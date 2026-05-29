@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-# LOCAL DEV STUB — replace with real WoL script on the Pi.
-# Exit contract: 0 = WoL packet sent, non-zero = failure
-echo "stub: wake action accepted (exit 0)"
-exit 0
+# Sends a Wake-on-LAN magic packet via wakeonlan.
+# Requires: wakeonlan package (sudo apt install wakeonlan)
+# Exit contract: 0=packet sent, non-zero=failure
+TARGET_MAC="${PI_BRIDGE_TARGET_MAC:-aa:bb:cc:dd:ee:ff}"
+
+wakeonlan "$TARGET_MAC"
+exit $?
