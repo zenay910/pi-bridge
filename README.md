@@ -47,7 +47,7 @@ Export variables when running manually:
 set -a && source .env && set +a
 ```
 
-For a persistent service, use a systemd `EnvironmentFile` (see Phase 4 / T14 in `tasks.md`).
+For a persistent service, use the systemd unit in [`deploy/pi-bridge.service`](deploy/pi-bridge.service) (see **Run as a systemd service** below).
 
 ### 3. Scripts
 
@@ -112,7 +112,40 @@ http://<pi-tailscale-ip>:8080/
 
 Find the Pi’s Tailscale IP with `tailscale ip -4` on the Pi, or in the Tailscale admin console.
 
-### 5. Local development (laptop)
+### 6. Run as a systemd service
+
+The unit file lives at [`deploy/pi-bridge.service`](deploy/pi-bridge.service). Adjust paths if your repo is not at `/home/pi/pi-bridge`:
+
+- `WorkingDirectory` — repo root (relative script paths in `.env` resolve from here)
+- `EnvironmentFile` — your `.env` with real host, MAC, and SSH user
+- `ExecStart` — venv Python running `app.py`
+- `Restart=on-failure` — restarts after crashes
+
+Install and enable on the Pi:
+
+```bash
+# edit paths in the unit file if needed
+sudo cp deploy/pi-bridge.service /etc/systemd/system/pi-bridge.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now pi-bridge
+```
+
+Check status and logs:
+
+```bash
+sudo systemctl status pi-bridge
+journalctl -u pi-bridge -f
+```
+
+Restart after changing `.env`:
+
+```bash
+sudo systemctl restart pi-bridge
+```
+
+**Verify (T14):** service is `active (running)`, dashboard loads over Tailscale, and it survives `sudo reboot`.
+
+### 7. Local development (laptop)
 
 You can run the same steps on a laptop to develop the UI and API:
 

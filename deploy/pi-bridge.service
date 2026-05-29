@@ -1,0 +1,17 @@
+[Unit]
+Description=pi-bridge homelab dashboard
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/pi-bridge
+EnvironmentFile=/home/pi/pi-bridge/.env
+ExecStart=/home/pi/pi-bridge/.venv/bin/python3 app.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

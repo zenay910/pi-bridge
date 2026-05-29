@@ -54,17 +54,17 @@ Execute **one task at a time**. Check the box only after **Verify** passes and a
 - [x] **T11** — Wire `fetch` for status, refresh, wake, suspend (loading/disabled states, 60s auto-refresh, 3s post-action refresh)  
   **Verify:** Buttons call API; status pill updates; errors show a simple message.
 
-- [ ] **T12** — Implement `GET /` route rendering `index.html`  
+- [x] **T12** — Implement `GET /` route rendering `index.html`  
   **Verify:** `/` and `/api/status` both work in one running process.
 
 ---
 
 ## Phase 4 — Pi deployment & verification (~25 min)
 
-- [ ] **T13** — Add `README.md` section: venv, `.env`, run command, Tailscale URL, script setup  
+- [x] **T13** — Add `README.md` section: venv, `.env`, run command, Tailscale URL, script setup  
   **Verify:** Another reader can follow steps without chat context.
 
-- [ ] **T14** — Create `systemd` unit example in README (or `deploy/pi-bridge.service`): `WorkingDirectory`, `EnvironmentFile`, `ExecStart=/path/to/venv/bin/python3 app.py`, restart on failure  
+- [x] **T14** — Create `systemd` unit example in README (or `deploy/pi-bridge.service`): `WorkingDirectory`, `EnvironmentFile`, `ExecStart=/path/to/venv/bin/python3 app.py`, restart on failure  
   **Verify:** `sudo systemctl enable --now` on Pi; service stays running after reboot (human test).
 
 - [ ] **T15** — **End-to-end on Tailscale:** from phone/laptop, open dashboard, confirm status matches reality, test wake and suspend (only when safe)  
